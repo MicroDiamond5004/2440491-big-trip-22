@@ -52,17 +52,17 @@ function getWeightForNullProperty(propertyA, propertyB) {
 
 function sortPointByDay(pointA, pointB) {
   const weight = getWeightForNullProperty(pointA, pointB);
-  return weight ?? dayjs(pointA[0].day).diff(dayjs(pointB[0].day));
+  return weight ?? dayjs(pointA.day).diff(dayjs(pointB.day));
 }
 
 function sortPointByTime(pointA, pointB) {
   const weight = getWeightForNullProperty(pointA, pointB);
-  return weight ?? dayjs(`2024-02-10T${pointA[0].startTime}`).diff(dayjs(`2024-02-10T${pointB[0].startTime}`));
+  return weight ?? dayjs(`2024-02-10T${pointA.startTime}`).diff(dayjs(`2024-02-10T${pointB.startTime}`));
 }
 
 function sortPointByPrice(pointA, pointB) {
   const weight = getWeightForNullProperty(pointA, pointB);
-  return weight ?? pointA[0].price - pointB[0].price;
+  return weight ?? pointA.price - pointB.price;
 }
 
 export {humanizeTravelDate, toEditTime, subtractDates, sortPointByDay, sortPointByTime, sortPointByPrice};

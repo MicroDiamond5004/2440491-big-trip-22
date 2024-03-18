@@ -3,14 +3,12 @@ import AbstractView from '../framework/view/abstract-view.js';
 import { humanizeTravelDate, subtractDates } from '../util/point.js';
 
 function createNewPoint(event) {
-  const travelPoint = event[0];
-  const offers = event[1];
-  const {day, type, place, startTime, finishTime, price, isFavorite} = travelPoint;
+  const {day, type, place, startTime, finishTime, price, isFavorite, currentOffers: offers} = event;
   const offerEls = [];
   function getOfferById(offerId) {
     return offers.filter((el) => el.id === offerId);
   }
-  const pointOffers = travelPoint.offersId ? travelPoint.offersId.map((offerId) => getOfferById(offerId)) : 0;
+  const pointOffers = event.offersCheckedId ? event.offersCheckedId.map((offerId) => getOfferById(offerId)) : 0;
   if (pointOffers !== 0) {
     pointOffers.forEach((el) => {
       offerEls.push(`<li class="event__offer">
@@ -27,7 +25,7 @@ function createNewPoint(event) {
     <div class="event__type">
       <img class="event__type-icon" width="42" height="42" src="img/icons/${type.toLowerCase()}.png" alt="Event type icon">
     </div>
-    <h3 class="event__title">${type[0].toUpperCase() + type.slice(1)} ${place[0].toUpperCase() + place.slice(1)}</h3>
+    <h3 class="event__title">${type[0].toUpperCase() + type.slice(1)} ${(place ? place[0].toUpperCase() + place.slice(1) : '') }</h3>
     <div class="event__schedule">
       <p class="event__time">
         <time class="event__start-time" datetime="">${startTime}</time>

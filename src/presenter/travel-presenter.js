@@ -40,10 +40,6 @@ export default class TravelPresenter {
 
   /** Функция для отрисовки всех компонентов */
   #renderList() {
-    if (this.#travelEvents === null) {
-      this.#renderNoPoints();
-      return;
-    }
     this.#renderSort();
     this.#renderPoints();
   }
@@ -60,7 +56,7 @@ export default class TravelPresenter {
   #handlePointChange = (updatedPoint) => {
     this.#travelEvents = updateItem(this.#travelEvents, updatedPoint);
     this.#sourcedTravelEvents = updateItem(this.#sourcedTravelEvents, updatedPoint);
-    this.#pointPresenters.get(updatedPoint[0].id).init(updatedPoint);
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
   };
 
   #handleModeChange = () => {
@@ -72,6 +68,10 @@ export default class TravelPresenter {
   }
 
   #renderPoints() {
+    if (this.#travelEvents === null) {
+      this.#renderNoPoints();
+      return;
+    }
     this.#travelEvents.forEach((el) => this.#renderPoint(el));
   }
 
@@ -79,10 +79,11 @@ export default class TravelPresenter {
     const pointPresenter = new PointPresenter({
       travelContainer: this.#travelContainer,
       onDataChange: this.#handlePointChange,
-      onModeChange: this.#handleModeChange
+      onModeChange: this.#handleModeChange,
+      clearEvent: this.#clearEventById
     });
     pointPresenter.init(point);
-    this.#pointPresenters.set(point[0].id, pointPresenter);
+    this.#pointPresenters.set(point.id, pointPresenter);
   }
 
   #sortPoints(sortType) {
@@ -106,6 +107,20 @@ export default class TravelPresenter {
   #clearList() {
     this.#pointPresenters.forEach((el) => el.destroy());
   }
+
+  #clearEventById = (id) => {
+    this.#pointPresenters.forEach((value, key) => {
+      if(key === id) {
+        this.#pointPresenters.delete(key);
+      }
+    });
+    this.#travelEvents = this.#travelEvents.filter((el) => el.id !== id);
+    this.#sourcedTravelEvents = [...this.#travelEvents];
+    if(this.#travelEvents.length === 0) {
+      console.log(this.#travelEvents);
+      this.#renderNoPoints();
+    }
+  };
 
   #handleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType) {

@@ -9,7 +9,8 @@ const mockEvents = [{
   startTime: '10:30',
   finishTime: '11:50',
   price: 20,
-  offersId: [1, 2],
+  offersId: [2, 3, 1],
+  offersCheckedId: [2, 3],
   isFavorite: false,
   destination: {
     hasDestination: true,
@@ -24,7 +25,8 @@ const mockEvents = [{
   startTime: '8:30',
   finishTime: '10:30',
   price: 6320,
-  offersId: [3, 4],
+  offersId: [3, 4, 2],
+  offersCheckedId: [3, 4],
   isFavorite: true,
   destination: {
     hasDestination: true,
@@ -39,7 +41,8 @@ const mockEvents = [{
   startTime: '12:00',
   finishTime: '18:20',
   price: 6320,
-  offersId: [5, 6],
+  offersId: [5, 6, 2, 3,],
+  offersCheckedId: [5, 6],
   isFavorite: false,
   destination: {
     hasDestination: false,
@@ -55,6 +58,7 @@ const mockEvents = [{
   finishTime: '22:20',
   price: 785,
   isFavorite: false,
+  offersId: [1, 3, 5, 7],
   destination: {
     hasDestination: false,
     text: '',
@@ -96,6 +100,18 @@ const mockOffers = [{
   id: 6,
   text: 'Switch to comfort',
   price: 100,
+  isChecked: false
+},
+{
+  id: 7,
+  text: 'Add meal',
+  price: 100,
+  isChecked: false
+},
+{
+  id: 8,
+  text: 'Book hotel',
+  price: 500,
   isChecked: false
 }];
 

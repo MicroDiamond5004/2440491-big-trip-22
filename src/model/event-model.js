@@ -11,7 +11,13 @@ export default class EventModel {
 
   createEventModel = () => {
     const currentEvent = this.#getRandomEvent();
-    return [currentEvent, mockOffers];
+    const currentOffers = mockOffers.filter((el) => {
+      const currentOffersArr = currentEvent.offersId;
+      if(currentOffersArr) {
+        return currentOffersArr.indexOf(el.id) !== -1;
+      }
+    });
+    return {...currentEvent, currentOffers};
   };
 
   #events = Array.from({length: EVENT_COUNT}, this.createEventModel);
